@@ -12,6 +12,7 @@ def get_notes():
     return {
         "data": [
             {
+                "id": note.id,
                 "text": note.text,
                 "is_completed": note.is_completed,
                 "created_at": note.created_at,
@@ -76,3 +77,24 @@ def delete_note(id):
     db.session.commit()
 
     return {"message": "Note successfully deleted"}, 200
+
+
+# Toggle completion
+@notes.get("/toggle_completed/<int:id>")
+def toggle_note_completion(id):
+    note = Note.query.filter_by(id=id).first()
+
+    if note is None:
+        return {"error": "Note not found"}, 404
+
+    note.is_completed = not note.is_completed
+    db.session.commit()
+
+    return {
+        "message": "Note status toggled",
+        "note": {
+            "text": note.text,
+            "is_completed": note.is_completed,
+            "updated_at": note.updated_at,
+        },
+    }, 200
