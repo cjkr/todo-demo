@@ -4,7 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 db = SQLAlchemy()
 
 
-class Note(db.Model):
+class Todo(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     text = db.Column(db.Text(), nullable=False)
     is_completed = db.Column(db.Boolean, default=False)
@@ -12,4 +12,4 @@ class Note(db.Model):
     updated_at = db.Column(db.DateTime, onupdate=datetime.now())
 
     def __repr__(self) -> str:
-        return f"Note>>> {self.text}"
+        return f"Todo>>> {self.text}"

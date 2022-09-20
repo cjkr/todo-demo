@@ -3,12 +3,12 @@ from flask import Flask
 from flask_cors import CORS
 
 from src.database import db
-from src.notes import notes
+from src.todos import todos
 
 
 def create_app():
     app = Flask(__name__, instance_relative_config=True)
-    CORS(app)
+    cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
 
     app.config.from_mapping(
         SECRET_KEY=os.environ.get("SECRET_KEY"),
@@ -19,7 +19,7 @@ def create_app():
     db.app = app
     db.init_app(app)
 
-    app.register_blueprint(notes)
+    app.register_blueprint(todos)
 
     @app.errorhandler(404)
     def handle_404(e):
