@@ -98,7 +98,7 @@
   <ul class="list-group">
     {#each todos as todo}
       <div class="d-flex flex-row">
-        <li class="list-group-item flex-fill todo-entry">
+        <li class="list-group-item flex-fill todo-entry d-flex">
           <input
             class="form-check-input me-3"
             type="checkbox"
@@ -106,13 +106,18 @@
             id=""
             on:click={() => handleCompleteTodo(todo.id)}
           />
-          <span
-            class={todo.is_completed
-              ? "text-decoration-line-through text-muted"
-              : "fw-light"}>{todo.text}</span
-          >
+          <input
+            type="text"
+            value={todo.text}
+            class={`todo-text flex-fill ${
+              todo.is_completed
+                ? "text-decoration-line-through text-muted"
+                : "fw-light"
+            }`}
+            readonly
+          />
         </li>
-        <button class="btn btn-outline-success">
+        <button class="btn btn-outline-success edit-button">
           <i class="bi bi-pencil" />
         </button>
         <button
@@ -137,5 +142,14 @@
 
   .todo-entry {
     border-radius: 0.5em 0 0 0.5em !important;
+  }
+
+  .edit-button {
+    border-radius: 0 !important;
+    border: 1px solid #dee2e6;
+  }
+
+  .todo-text {
+    border: 0;
   }
 </style>
